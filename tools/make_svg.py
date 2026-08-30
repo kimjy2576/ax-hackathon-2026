@@ -69,7 +69,7 @@ def chip(x,y,text,w=None,fg="#4B5563",bg="#fff",bd=BD,size=10.5):
 OY=72; W=860; H1=OY+888+50
 c1=[f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H1}" viewBox="0 0 {W} {H1}" font-family="{FONT}">',
     DEFS, rect(0.75,0.75,W-1.5,H1-1.5,"#fff",BD,rx=18),
-    header("THERMA-Crew 서비스 구조도","가상 선행연구팀 · 과제 유형별 분기 → 공통 백본 수렴","VirtualCycle선행Project")]
+    header("THERMA-Crew 서비스 구조도","순방향(요구사양 → 설계안) · 과제 유형별 분기 → 공통 백본 수렴","VirtualCycle선행Project")]
 def Y(y): return y+OY
 
 # 스파인·연결선
@@ -151,7 +151,7 @@ open('THERMA-Crew_구조도.svg','w',encoding='utf-8').write(''.join(c1))
 H2=OY+612+50
 c2=[f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H2}" viewBox="0 0 {W} {H2}" font-family="{FONT}">',
     DEFS, rect(0.75,0.75,W-1.5,H2-1.5,"#fff",BD,rx=18),
-    header("CYCLE-Master 서비스 구조도","사이클 진단 가상전문가 · 하나의 진단 루프(4단계)","냉부해(냉동사이클을 부탁해)")]
+    header("CYCLE-Master 서비스 구조도","역방향(데이터 → 원인) · 하나의 진단 루프(4단계)","냉부해(냉동사이클을 부탁해)")]
 
 # 연결선
 c2.append(arrow(420,Y(166),420,Y(186)))
@@ -210,6 +210,7 @@ c2.append(lines(687,Y(505),["확신도 미달 시","쟁점 정리 후 이관"],l
 # 기각 라벨 칩
 c2.append(rect(498,Y(297),132,22,RED_S,RED_B,rx=8,sw=1))
 c2.append(txt(564,Y(312),"기각 시 가설 갱신 ↺",10,700,RED,anchor="middle"))
+c2.append(txt(246,Y(596),"성능 검증 — 원인 확정 과거 이슈 블라인드 테스트 · 1순위 가설 일치율 80%+ 목표 (생성은 시뮬레이션, 검증은 전문가·실측)",10,700,SUB))
 
 # 범례
 c2.append(f'<line x1="0" y1="{OY+612}" x2="{W}" y2="{OY+612}" stroke="{BD}" stroke-width="1"/>')
