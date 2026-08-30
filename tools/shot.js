@@ -1,0 +1,13 @@
+const { chromium } = require('playwright');
+(async () => {
+  const browser = await chromium.launch();
+  const page = await browser.newPage({ viewport: { width: 1000, height: 1400 }, deviceScaleFactor: 1 });
+  await page.goto('file:///home/claude/AX_구조도.html');
+  await page.waitForTimeout(1500);
+  for (const [id, name] of [['c1','THERMA-Crew_구조도'], ['c2','CYCLE-Master_구조도']]) {
+    const el = await page.$('#'+id);
+    await el.screenshot({ path: name + '.jpg', type: 'jpeg', quality: 92 });
+  }
+  await browser.close();
+  console.log('done');
+})();

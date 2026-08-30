@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>AX HACKATHON — 서비스 구조도 (와이드 상세)</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  :root{
+    --ink:#1B2233; --sub:#69748B; --bd:#E7EAF1;
+    --red:#E5484D; --red-s:#FFF1F2; --red-b:#F5B9BB;
+    --ind:#6366F1; --ind-d:#4F52D9; --ind-s:#EFF0FE; --ind-b:#D8DAF8;
+    --gr:#F6F7FA; --gr-b:#CBD1DD;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#E9EBF0;color:var(--ink);
+    word-break:keep-all;display:flex;flex-direction:column;align-items:center;gap:48px;padding:48px 0 80px}
+  .canvas{width:1920px;height:1080px;background:#fff;position:relative;overflow:hidden}
+  .blob{position:absolute;border-radius:50%;pointer-events:none}
+  svg.wires{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+
+  .kick{position:absolute;display:inline-flex;align-items:center;gap:10px;background:var(--ind-s);color:var(--ind-d);
+    font-size:17px;font-weight:800;letter-spacing:.06em;border-radius:999px;padding:10px 22px}
+  .kick.red{background:var(--red-s);color:var(--red)}
+  h1{position:absolute;font-size:40px;font-weight:800;letter-spacing:-.02em}
+  h1 em{font-style:normal;color:var(--ind-d)} h1 em.red{color:var(--red)}
+  .sub{position:absolute;font-size:20px;color:var(--sub);font-weight:500}
+  .team{position:absolute;font-size:19px;font-weight:800;color:var(--red)}
+
+  .agent{position:absolute;background:linear-gradient(180deg,#FBFBFF 0%,#F3F4FE 100%);border:2px solid var(--ind-b);
+    border-radius:24px;padding:22px 20px;text-align:center;box-shadow:0 2px 8px rgba(20,26,43,.05)}
+  .agent .no{position:absolute;top:14px;left:16px;width:32px;height:32px;border-radius:11px;background:#fff;
+    color:var(--ind);font-size:16px;font-weight:800;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--ind-b)}
+  .agent .cir{width:72px;height:72px;border-radius:50%;margin:4px auto 12px;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--ind) 0%,#8B8DF7 100%)}
+  .agent .cir svg{width:34px;height:34px;stroke:#fff;stroke-width:1.9;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  .agent .role{font-size:21px;font-weight:800}
+  .agent .ds{font-size:14.5px;color:var(--sub);line-height:1.55;margin-top:8px;text-align:left}
+  .agent .ds b{color:var(--ink)}
+
+  .chipgrid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:12px}
+  .pchip{background:#fff;border:1.5px solid var(--bd);border-radius:10px;padding:7px 6px;font-size:12.5px;font-weight:700;color:#3A4356}
+  .pchip span{color:var(--red);font-weight:800;margin-right:3px}
+  .cap{font-size:12px;font-weight:800;color:var(--ind-d);letter-spacing:.04em;margin-top:9px}
+
+  .olist{margin-top:12px;display:flex;flex-direction:column;gap:7px}
+  .oitem{display:flex;align-items:center;gap:9px;background:#fff;border:1.5px solid var(--bd);border-radius:10px;padding:8px 12px;text-align:left}
+  .oitem svg{width:17px;height:17px;stroke:var(--ind-d);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;flex:none}
+  .oitem .t{font-size:13.5px;font-weight:800}
+  .oitem .d{font-size:11px;color:var(--sub)}
+
+  .gate{position:absolute;background:var(--gr);border:2px dashed var(--gr-b);border-radius:20px;padding:16px 14px;text-align:center}
+  .gate .cir{width:44px;height:44px;border-radius:50%;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,#8592AB,#AAB4C8)}
+  .gate .cir svg{width:22px;height:22px;stroke:#fff;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  .gate .t{font-size:15px;font-weight:800;color:#4B5563}
+  .gate .d{font-size:12px;color:var(--sub);margin-top:2px;line-height:1.4}
+
+  .side{position:absolute;border-radius:20px;padding:16px 20px;display:flex;gap:14px;align-items:center}
+  .side.tool{background:#fff;border:2px solid var(--ind)}
+  .side.know{background:var(--gr);border:2px solid var(--bd)}
+  .side .ic{width:46px;height:46px;border-radius:13px;display:flex;align-items:center;justify-content:center;flex:none}
+  .side.tool .ic{background:var(--ind-s)} .side.know .ic{background:#fff;border:1.5px solid var(--bd)}
+  .side .ic svg{width:24px;height:24px;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  .side.tool .ic svg{stroke:var(--ind-d)} .side.know .ic svg{stroke:#7A8398}
+  .side .t{font-size:16px;font-weight:800}
+  .side.tool .t{color:var(--ind-d)}
+  .side .t .mcp{font-size:11px;font-weight:800;background:var(--ind);color:#fff;border-radius:7px;padding:2px 7px;margin-left:7px;vertical-align:2px}
+  .side .d{font-size:12.5px;color:var(--sub);margin-top:2px;line-height:1.45}
+
+  .lchip{position:absolute;background:var(--red-s);border:1.5px solid var(--red-b);border-radius:999px;
+    padding:7px 16px;font-size:14px;font-weight:800;color:var(--red)}
+  .glabel{position:absolute;font-size:12.5px;font-weight:700;color:var(--sub);background:#fff;padding:2px 8px;border-radius:7px}
+
+  .banner{position:absolute;left:64px;right:64px;bottom:44px;background:linear-gradient(90deg,#1B2233,#343E5C);border-radius:20px;
+    padding:20px 32px;display:flex;align-items:center;gap:20px}
+  .banner svg{width:30px;height:30px;stroke:#FFD9DB;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;flex:none}
+  .banner .tx{font-size:22px;font-weight:800;color:#fff}
+  .banner .tx small{font-size:15.5px;font-weight:600;color:#B8C0D6;margin-left:16px}
+
+  .scen{position:absolute;display:flex;gap:10px;align-items:center}
+  .scen .cl{font-size:14px;font-weight:800;color:var(--sub)}
+  .scen .c{background:#fff;border:1.5px solid var(--bd);border-radius:999px;padding:7px 16px;font-size:14px;font-weight:700;color:#3A4356}
+</style>
+</head>
+<body>
+
+<!-- ============ 1팀 와이드 상세 ============ -->
+<div class="canvas" id="c1">
+  <div class="blob" style="width:640px;height:640px;right:-220px;top:-260px;background:radial-gradient(circle,#EFF0FE 0%,rgba(239,240,254,0) 70%)"></div>
+  <div class="blob" style="width:520px;height:520px;left:-200px;bottom:-140px;background:radial-gradient(circle,#FFF1F2 0%,rgba(255,241,242,0) 70%)"></div>
+
+  <svg class="wires" viewBox="0 0 1920 1080">
+    <defs>
+      <marker id="w-g" markerWidth="10" markerHeight="10" refX="7.5" refY="5" orient="auto"><path d="M0,0.5 L8.5,5 L0,9.5 Z" fill="#AEB5C6"/></marker>
+      <marker id="w-i" markerWidth="10" markerHeight="10" refX="7.5" refY="5" orient="auto"><path d="M0,0.5 L8.5,5 L0,9.5 Z" fill="#6366F1"/></marker>
+      <marker id="w-r" markerWidth="10" markerHeight="10" refX="7.5" refY="5" orient="auto"><path d="M0,0.5 L8.5,5 L0,9.5 Z" fill="#E5484D"/></marker>
+    </defs>
+    <!-- 메인 흐름 -->
+    <line x1="216" y1="485" x2="248" y2="485" stroke="#AEB5C6" stroke-width="2.6" marker-end="url(#w-g)"/>
+    <line x1="498" y1="485" x2="532" y2="485" stroke="#AEB5C6" stroke-width="2.6" marker-end="url(#w-g)"/>
+    <line x1="828" y1="485" x2="862" y2="485" stroke="#AEB5C6" stroke-width="2.6" marker-end="url(#w-g)"/>
+    <line x1="1112" y1="485" x2="1146" y2="485" stroke="#AEB5C6" stroke-width="2.6" marker-end="url(#w-g)"/>
+    <line x1="1396" y1="485" x2="1430" y2="485" stroke="#AEB5C6" stroke-width="2.6" marker-end="url(#w-g)"/>
+    <line x1="1704" y1="485" x2="1738" y2="485" stroke="#AEB5C6" stroke-width="2.6" marker-end="url(#w-g)"/>
+    <!-- 반려 루프 (검증 → 해석) -->
+    <path d="M 1273,316 C 1273,254 989,254 989,316" stroke="#E5484D" stroke-width="3" fill="none" marker-end="url(#w-r)"/>
+    <!-- 해석 ⇄ 엔진 -->
+    <line x1="955" y1="664" x2="955" y2="686" stroke="#6366F1" stroke-width="2.6" marker-end="url(#w-i)"/>
+    <line x1="1022" y1="686" x2="1022" y2="668" stroke="#6366F1" stroke-width="2.6" marker-end="url(#w-i)"/>
+    <!-- 지식 → 설계 (점선 엘보) -->
+    <path d="M 448,745 L 660,745 L 660,666" stroke="#AEB5C6" stroke-width="2.2" stroke-dasharray="6 6" fill="none" marker-end="url(#w-g)"/>
+  </svg>
+
+  <div class="kick" style="left:64px;top:52px">AI 가상 연구팀 · THERMA-Crew</div>
+  <h1 style="left:64px;top:112px">과제 유형별로 갈라지고, <em>공통 검증 라인</em>으로 모입니다</h1>
+  <div class="sub" style="left:64px;top:176px">5개 AI 에이전트의 릴레이 — 사람은 시작과 끝 두 곳만 승인합니다</div>
+  <div class="team" style="right:64px;top:60px">VirtualCycle선행Project</div>
+
+  <!-- 사람 게이트 ① -->
+  <div class="gate" style="left:64px;top:408px;width:152px">
+    <div class="cir"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.4"/><path d="M5.5 20c1.1-3.4 3.7-4.9 6.5-4.9s5.4 1.5 6.5 4.9"/></svg></div>
+    <div class="t">사람 게이트 ①</div><div class="d">과제 입력<br>브리프 승인</div>
+  </div>
+
+  <!-- 1 기획 -->
+  <div class="agent" style="left:252px;top:320px;width:246px;height:340px">
+    <div class="no">1</div>
+    <div class="cir"><svg viewBox="0 0 24 24"><path d="M8 4h8M9 4v3l-4.5 8.5A3 3 0 0 0 7 20h10a3 3 0 0 0 2.5-4.5L15 7V4"/></svg></div>
+    <div class="role">기획 담당</div>
+    <div class="ds">과제를 알아듣고 <b>유형을 분류</b>한 뒤, 해석 가능한 조건으로 번역해 <b>설계 브리프</b>를 만듭니다. 범위 밖 과제는 사람에게 되돌립니다.</div>
+  </div>
+
+  <!-- 2 설계 -->
+  <div class="agent" style="left:536px;top:320px;width:292px;height:340px">
+    <div class="no">2</div>
+    <div class="cir"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 12l4-4M12 12l-2 5"/></svg></div>
+    <div class="role">설계 담당</div>
+    <div class="ds">과제 유형에 맞는 <b>탐색 전략</b>을 세워 후보를 골라냅니다.</div>
+    <div class="cap">과제 유형별 플레이북 (분기)</div>
+    <div class="chipgrid">
+      <div class="pchip"><span>①</span>제품 설계 검토</div>
+      <div class="pchip"><span>②</span>응용 사이클 검토</div>
+      <div class="pchip"><span>③</span>대체냉매 탐색</div>
+      <div class="pchip"><span>④</span>신기술 연구개발</div>
+    </div>
+  </div>
+
+  <!-- 3 해석 -->
+  <div class="agent" style="left:866px;top:320px;width:246px;height:340px">
+    <div class="no">3</div>
+    <div class="cir"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 16v-5M12 16v-8M16 16v-3"/></svg></div>
+    <div class="role">해석 담당</div>
+    <div class="ds">후보마다 케이스를 자동 생성해 <b>해석 엔진으로 수백 번 시험</b>을 돌리고, 실패 케이스는 조건을 바꿔 재시도합니다.</div>
+  </div>
+
+  <!-- 4 검증 -->
+  <div class="agent" style="left:1150px;top:320px;width:246px;height:340px">
+    <div class="no">4</div>
+    <div class="cir"><svg viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2.2 2.2L15.5 10"/></svg></div>
+    <div class="role">검증 담당</div>
+    <div class="ds">물리적으로 말이 안 되는 결과를 찾아내면 <b style="color:var(--red)">반려하고 재계산</b>을 지시합니다. <b>통과한 결과만</b> 다음으로 넘깁니다.</div>
+  </div>
+
+  <!-- 5 보고 -->
+  <div class="agent" style="left:1434px;top:320px;width:270px;height:340px">
+    <div class="no">5</div>
+    <div class="cir" style="width:56px;height:56px;margin-bottom:8px"><svg viewBox="0 0 24 24" style="width:28px;height:28px"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M10 12h6M10 16h6"/></svg></div>
+    <div class="role">보고 담당</div>
+    <div class="olist">
+      <div class="oitem"><svg viewBox="0 0 24 24"><path d="M12 3l2.4 5 5.6.7-4.1 3.9 1 5.4L12 15.6 7.1 18l1-5.4L4 8.7 9.6 8z"/></svg><div><div class="t">추천 설계안</div></div></div>
+      <div class="oitem"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M9 5v14"/></svg><div><div class="t">후보 비교표</div></div></div>
+      <div class="oitem"><svg viewBox="0 0 24 24"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/></svg><div><div class="t">검토 보고서 초안</div></div></div>
+    </div>
+  </div>
+
+  <!-- 사람 게이트 ② -->
+  <div class="gate" style="left:1742px;top:408px;width:152px">
+    <div class="cir"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.4"/><path d="M5.5 20c1.1-3.4 3.7-4.9 6.5-4.9s5.4 1.5 6.5 4.9"/></svg></div>
+    <div class="t">사람 게이트 ②</div><div class="d">최종 검토<br>확정</div>
+  </div>
+
+  <!-- 하단 레일 -->
+  <div class="side know" style="left:64px;top:690px;width:384px;height:110px">
+    <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 19V6a2 2 0 0 1 2-2h13v15"/><path d="M4 19a2 2 0 0 0 2 2h13v-4H6a2 2 0 0 0-2 2z"/></svg></div>
+    <div><div class="t">지식 자산</div>
+    <div class="d">과거 검토 사례·설계 지식 (RAG)<br>냉매 물성 · 규제(GWP) DB → 플레이북의 근거</div></div>
+  </div>
+  <div class="side tool" style="left:866px;top:690px;width:246px;height:110px">
+    <div class="ic"><svg viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2.5"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/></svg></div>
+    <div><div class="t">1D 해석 엔진<span class="mcp">MCP</span></div>
+    <div class="d">자체 개발 시뮬레이터<br>호출 ⇄ 결과 반환</div></div>
+  </div>
+
+  <div class="lchip" style="left:1042px;top:236px">반려 · 자동 재계산 루프</div>
+  
+
+  <div class="banner">
+    <svg viewBox="0 0 24 24"><path d="M12 3l7 3v6c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2.2 2.2L15.5 10"/></svg>
+    <div class="tx">자율적이지만, 통제됩니다<small>사람 게이트 2곳 · 검증 실패 시 자동 반려·재계산 · 검증을 통과한 결과만 보고됩니다</small></div>
+  </div>
+</div>
+
+<!-- ============ 2팀 와이드 상세 ============ -->
+<div class="canvas" id="c2">
+  <div class="blob" style="width:640px;height:640px;right:-220px;top:-260px;background:radial-gradient(circle,#FFF1F2 0%,rgba(255,241,242,0) 70%)"></div>
+  <div class="blob" style="width:520px;height:520px;left:-200px;bottom:-140px;background:radial-gradient(circle,#EFF0FE 0%,rgba(239,240,254,0) 70%)"></div>
+
+  <svg class="wires" viewBox="0 0 1920 1080">
+    <defs>
+      <marker id="v-g" markerWidth="10" markerHeight="10" refX="7.5" refY="5" orient="auto"><path d="M0,0.5 L8.5,5 L0,9.5 Z" fill="#AEB5C6"/></marker>
+      <marker id="v-r" markerWidth="10" markerHeight="10" refX="7.5" refY="5" orient="auto"><path d="M0,0.5 L8.5,5 L0,9.5 Z" fill="#E5484D"/></marker>
+    </defs>
+    <line x1="236" y1="485" x2="270" y2="485" stroke="#AEB5C6" stroke-width="2.6" marker-end="url(#v-g)"/>
+    <line x1="524" y1="485" x2="558" y2="485" stroke="#AEB5C6" stroke-width="2.6" marker-end="url(#v-g)"/>
+    <line x1="862" y1="485" x2="896" y2="485" stroke="#AEB5C6" stroke-width="2.6" marker-end="url(#v-g)"/>
+    <line x1="1200" y1="485" x2="1234" y2="485" stroke="#AEB5C6" stroke-width="2.6" marker-end="url(#v-g)"/>
+    <line x1="1518" y1="485" x2="1552" y2="485" stroke="#AEB5C6" stroke-width="2.2" stroke-dasharray="6 6" marker-end="url(#v-g)"/>
+    <!-- 기각 루프 (검증 → 토론) -->
+    <path d="M 1050,316 C 1050,254 712,254 712,316" stroke="#E5484D" stroke-width="3" fill="none" marker-end="url(#v-r)"/>
+    <!-- 시뮬 ⇄ 검증 -->
+    <line x1="1000" y1="634" x2="1000" y2="672" stroke="#E5484D" stroke-width="2.6" marker-end="url(#v-r)"/>
+    <line x1="1090" y1="672" x2="1090" y2="638" stroke="#E5484D" stroke-width="2.6" marker-end="url(#v-r)"/>
+    <!-- 지식 → 토론 (점선 엘보) -->
+    <path d="M 628,731 L 712,731 L 712,636" stroke="#AEB5C6" stroke-width="2.2" stroke-dasharray="6 6" fill="none" marker-end="url(#v-g)"/>
+  </svg>
+
+  <div class="kick red" style="left:64px;top:52px">AI 가상 전문가 · CYCLE-Master</div>
+  <h1 style="left:64px;top:112px">하나의 진단 루프 — <em class="red">가설을 세우고, 계산으로 검증</em>합니다</h1>
+  <div class="sub" style="left:64px;top:176px">토론과 가상 실험을 오가며 원인을 좁히는 4단계 프로세스</div>
+  <div class="team" style="right:64px;top:60px">냉부해(냉동사이클을 부탁해)</div>
+
+  <div class="scen" style="left:64px;top:236px">
+    <span class="cl">같은 프로세스가 쓰이는 곳 —</span>
+    <span class="c">개발 시험 이상</span><span class="c">신뢰성 판정</span><span class="c">필드 이슈</span><span class="c">성능 미달 분석</span>
+  </div>
+
+  <!-- 입력 -->
+  <div class="gate" style="left:64px;top:408px;width:172px">
+    <div class="cir"><svg viewBox="0 0 24 24"><path d="M12 16V5M7.5 9.5L12 5l4.5 4.5"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/></svg></div>
+    <div class="t">시험 데이터 업로드</div><div class="d">P-h 선도 · 시계열<br>어느 부서든</div>
+  </div>
+
+  <!-- 1 즉시 판독 -->
+  <div class="agent" style="left:274px;top:320px;width:250px;height:310px">
+    <div class="no" style="color:var(--red);border-color:var(--red-b)">1</div>
+    <div class="cir" style="background:linear-gradient(135deg,var(--red),#F0797D)"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg></div>
+    <div class="role">즉시 판독</div>
+    <div class="ds">업로드 즉시 데이터를 읽어 <b>이상 패턴을 식별</b>하고 1차 소견을 냅니다. 전문가 일정을 기다리는 <b>대기 시간이 사라집니다.</b></div>
+  </div>
+
+  <!-- 2 가설 토론 -->
+  <div class="agent" style="left:562px;top:320px;width:300px;height:310px">
+    <div class="no" style="color:var(--red);border-color:var(--red-b)">2</div>
+    <div class="cir" style="background:linear-gradient(135deg,var(--red),#F0797D)"><svg viewBox="0 0 24 24"><path d="M4 5h16v10H9l-5 4z"/></svg></div>
+    <div class="role">가설 토론</div>
+    <div class="ds">의심 원인을 <b>우선순위와 물리적 근거</b>를 붙여 제시하고, 엔지니어와 1:1로 토론합니다. 현장 정보와 반박을 반영해 <b>가설을 계속 갱신</b>합니다.</div>
+  </div>
+
+  <!-- 3 자가 검증 -->
+  <div class="agent" style="left:900px;top:320px;width:300px;height:310px">
+    <div class="no" style="color:var(--red);border-color:var(--red-b)">3</div>
+    <div class="cir" style="background:linear-gradient(135deg,var(--red),#F0797D)"><svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v4l-4 8a3 3 0 0 0 2.6 4.5h6.8A3 3 0 0 0 18 15l-4-8V3"/></svg></div>
+    <div class="role">자가 검증 <span style="font-size:14px;color:var(--red)">= 가상 재시험</span></div>
+    <div class="ds">가설대로 <b>시뮬레이션을 스스로 실행</b>해 실제 데이터와 대조합니다. 어긋나면 가설을 <b style="color:var(--red)">기각하고 다음 가설로.</b> 실물 재시험은 최종 확인 1회로 줄어듭니다.</div>
+  </div>
+
+  <!-- 4 리포트 -->
+  <div class="agent" style="left:1238px;top:320px;width:280px;height:310px">
+    <div class="no" style="color:var(--red);border-color:var(--red-b)">4</div>
+    <div class="cir" style="background:linear-gradient(135deg,var(--red),#F0797D);width:56px;height:56px;margin-bottom:8px"><svg viewBox="0 0 24 24" style="width:28px;height:28px"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/></svg></div>
+    <div class="role">원인 확정 · 리포트</div>
+    <div class="olist">
+      <div class="oitem"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg><div><div class="t">원인</div><div class="d">무엇이 문제였는지</div></div></div>
+      <div class="oitem"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M8 16v-5M12 16v-8M16 16v-3"/></svg><div><div class="t">근거</div><div class="d">계산으로 확인한 증거</div></div></div>
+      <div class="oitem"><svg viewBox="0 0 24 24"><path d="M14.5 6.5a4 4 0 0 0-5.6 5.6L4 17v3h3l4.9-4.9a4 4 0 0 0 5.6-5.6L14 13l-3-3z"/></svg><div><div class="t">조치 제안</div><div class="d">이제 무엇을 하면 되는지</div></div></div>
+    </div>
+  </div>
+
+  <!-- 에스컬레이션 -->
+  <div class="gate" style="left:1556px;top:396px;width:338px;padding:16px 20px;text-align:left">
+    <div style="display:flex;gap:12px;align-items:center">
+      <div class="cir" style="margin:0"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.4"/><path d="M5.5 20c1.1-3.4 3.7-4.9 6.5-4.9s5.4 1.5 6.5 4.9"/></svg></div>
+      <div><div class="t">전문가 에스컬레이션</div>
+      <div class="d">확신도가 낮으면 결론을 강요하지 않고,<br>쟁점을 정리해 사람 전문가에게 넘깁니다</div></div>
+    </div>
+  </div>
+
+  <!-- 하단 레일 -->
+  <div class="side know" style="left:64px;top:676px;width:564px;height:110px">
+    <div class="ic"><svg viewBox="0 0 24 24"><path d="M4 19V6a2 2 0 0 1 2-2h13v15"/><path d="M4 19a2 2 0 0 0 2 2h13v-4H6a2 2 0 0 0-2 2z"/></svg></div>
+    <div><div class="t">지식 자산</div>
+    <div class="d">고장 시그니처 라이브러리 (시뮬레이션 고장 주입으로 자체 생성) · 전문가 경험 지식 (RAG)</div></div>
+  </div>
+  <div class="side tool" style="left:900px;top:676px;width:300px;height:110px">
+    <div class="ic"><svg viewBox="0 0 24 24"><rect x="5" y="5" width="14" height="14" rx="2.5"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/></svg></div>
+    <div><div class="t">1D 시뮬레이션<span class="mcp">MCP</span></div>
+    <div class="d">가설대로 사이클 재현 = 가상 재시험<br>가설 → 재현 / 잔차 → 판정</div></div>
+  </div>
+
+  <div class="lchip" style="left:770px;top:236px">기각 시 가설 갱신 ↺</div>
+
+  <div class="banner">
+    <svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v4l-4 8a3 3 0 0 0 2.6 4.5h6.8A3 3 0 0 0 18 15l-4-8V3"/></svg>
+    <div class="tx">추측이 아니라, 계산으로 증명합니다<small>가설 제시 → 가상 재시험 → 잔차로 채택/기각 · 반복 재시험이 사라지고 최종 확인 1회만 남습니다</small></div>
+  </div>
+</div>
+
+</body>
+</html>

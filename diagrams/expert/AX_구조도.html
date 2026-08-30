@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>AX HACKATHON — AI 서비스 구조도</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+  :root{
+    --ink:#1F2430; --sub:#6B7280; --bd:#E4E7EE;
+    --red:#E5484D; --red-soft:#FFF1F2; --red-bd:#F7B4B7;
+    --indigo:#6366F1; --indigo-soft:#F1F2FD; --indigo-bd:#C3C6F5;
+    --gray-soft:#F6F7F9; --gray-bd:#C6CBD6;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    background:#EDEFF3; color:var(--ink); word-break:keep-all;
+    display:flex; flex-direction:column; align-items:center; gap:36px; padding:36px 0 60px;
+  }
+  .page-note{width:860px;font-size:13px;color:var(--sub);line-height:1.6}
+  .page-note b{color:var(--ink)}
+  .canvas{width:860px;background:#fff;position:relative;border:1px solid var(--bd);border-radius:18px;overflow:hidden}
+  .head{padding:22px 28px 16px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:baseline}
+  .head .t{font-size:19px;font-weight:800;letter-spacing:-0.01em}
+  .head .t small{font-weight:600;color:var(--sub);font-size:13px;margin-left:8px}
+  .head .team{font-size:12px;font-weight:800;color:var(--red)}
+  .stage{position:relative}
+  svg.wires{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+
+  .card{position:absolute;background:#fff;border:1.5px solid var(--bd);border-radius:16px;
+    box-shadow:0 1px 2px rgba(16,24,40,.05);padding:14px 16px;display:flex;gap:12px;align-items:flex-start}
+  .card .body{flex:1;min-width:0}
+  .card .nm{font-size:13.5px;font-weight:800;line-height:1.3}
+  .card .ds{font-size:11px;color:var(--sub);line-height:1.55;margin-top:4px}
+  .badge{flex:none;width:30px;height:30px;border-radius:9px;display:flex;align-items:center;justify-content:center;
+    font-size:14px;font-weight:800;background:var(--indigo-soft);color:var(--indigo)}
+  .agent{background:var(--indigo-soft);border-color:var(--indigo-bd)}
+  .agent .badge{background:#fff}
+  .human{background:var(--gray-soft);border:1.5px dashed var(--gray-bd)}
+  .human .badge{background:#fff;color:var(--sub)}
+  .toolc{border:1.5px solid var(--indigo);background:#fff}
+  .toolc .badge{background:var(--indigo);color:#fff;font-size:8.5px;letter-spacing:.02em}
+  .datac{background:var(--gray-soft)}
+  .pill{position:absolute;background:var(--gray-soft);border:1.5px dashed var(--gray-bd);border-radius:999px;
+    padding:11px 20px;font-size:12.5px;font-weight:800;color:#4B5563;text-align:center}
+  .pill small{display:block;font-weight:600;font-size:10.5px;color:var(--sub);margin-top:1px}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+  .mini{background:#fff;border:1.5px solid var(--bd);border-radius:12px;padding:9px 11px}
+  .mini .no{display:inline-flex;width:18px;height:18px;border-radius:6px;background:var(--red-soft);color:var(--red);
+    font-size:10.5px;font-weight:800;align-items:center;justify-content:center;margin-right:6px;vertical-align:-3px}
+  .mini .mn{font-size:11.5px;font-weight:800}
+  .mini .md{font-size:10px;color:var(--sub);line-height:1.5;margin-top:3px}
+
+  .chips{position:absolute;display:flex;gap:8px;align-items:center}
+  .chips .cl{font-size:10.5px;font-weight:700;color:var(--sub)}
+  .chip{font-size:10.5px;font-weight:700;color:#4B5563;border:1px solid var(--bd);border-radius:999px;padding:5px 12px;background:#fff}
+
+  .lbl{position:absolute;font-size:10px;font-weight:700;color:var(--sub);background:#fff;padding:1px 6px;line-height:1.45;border-radius:6px}
+  .lbl.red{color:var(--red)}
+  .lbl.ind{color:var(--indigo)}
+
+  .legend{display:flex;gap:16px;padding:14px 28px 18px;border-top:1px solid var(--bd);align-items:center;flex-wrap:wrap}
+  .legend .li{display:flex;gap:7px;align-items:center;font-size:11px;font-weight:600;color:var(--sub)}
+  .sw{width:15px;height:15px;border-radius:5px;flex:none}
+  .sw.a{background:var(--indigo-soft);border:1.5px solid var(--indigo-bd)}
+  .sw.h{background:var(--gray-soft);border:1.5px dashed var(--gray-bd);border-radius:999px}
+  .sw.t{background:#fff;border:1.5px solid var(--indigo)}
+  .sw.k{background:var(--gray-soft);border:1.5px solid var(--bd)}
+  .sw.loop{width:22px;height:0;border-top:2.5px solid var(--red);border-radius:0}
+</style>
+</head>
+<body>
+
+<div class="page-note">
+  각 구조도는 <b>가로 860px 흰 배경</b>으로 제작되어 있습니다. 캔버스 영역만 캡처하거나 함께 제공된 JPG를 그대로 업로드하면 규격에 맞습니다.
+</div>
+
+<!-- ============ 1팀 THERMA-Crew ============ -->
+<div class="canvas" id="c1">
+  <div class="head">
+    <div class="t">THERMA-Crew 서비스 구조도<small>가상 선행연구팀 · 과제 유형별 분기 → 공통 백본 수렴</small></div>
+    <div class="team">VirtualCycle선행Project</div>
+  </div>
+
+  <div class="stage" style="height:888px">
+    <svg class="wires" viewBox="0 0 860 888">
+      <defs>
+        <marker id="g" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 Z" fill="#9AA1AE"/></marker>
+        <marker id="r" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0.5 L7,4 L0,7.5 Z" fill="#E5484D"/></marker>
+        <marker id="i" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 Z" fill="#6366F1"/></marker>
+      </defs>
+      <!-- 세로 중앙 스파인 (x=540) -->
+      <line x1="540" y1="68" x2="540" y2="90" stroke="#9AA1AE" stroke-width="1.8" marker-end="url(#g)"/>
+      <line x1="540" y1="190" x2="540" y2="212" stroke="#9AA1AE" stroke-width="1.8" marker-end="url(#g)"/>
+      <line x1="540" y1="444" x2="540" y2="464" stroke="#9AA1AE" stroke-width="1.8" marker-end="url(#g)"/>
+      <line x1="540" y1="556" x2="540" y2="576" stroke="#9AA1AE" stroke-width="1.8" marker-end="url(#g)"/>
+      <line x1="540" y1="668" x2="540" y2="688" stroke="#9AA1AE" stroke-width="1.8" marker-end="url(#g)"/>
+      <line x1="540" y1="796" x2="540" y2="816" stroke="#9AA1AE" stroke-width="1.8" marker-end="url(#g)"/>
+      <!-- 지식 자산 → 설계 (점선) -->
+      <line x1="206" y1="330" x2="298" y2="330" stroke="#9AA1AE" stroke-width="1.5" stroke-dasharray="4 4" marker-end="url(#g)"/>
+      <!-- 1D 엔진 ↔ 해석 (인디고 왕복) -->
+      <line x1="206" y1="496" x2="298" y2="496" stroke="#6366F1" stroke-width="1.8" marker-end="url(#i)"/>
+      <line x1="300" y1="526" x2="208" y2="526" stroke="#6366F1" stroke-width="1.8" marker-end="url(#i)"/>
+      <!-- ★ 반려 루프: 검증 → 해석 (레드 엘보) -->
+      <path d="M 780,616 L 806,616 Q 814,616 814,608 L 814,522 Q 814,514 806,514 L 786,514" stroke="#E5484D" stroke-width="1.8" fill="none" marker-end="url(#r)"/>
+    </svg>
+
+    <!-- 사람 게이트 ① -->
+    <div class="pill" style="left:425px;top:20px;width:230px">사람 게이트 ① <small>과제 입력 · 설계 브리프 승인</small></div>
+
+    <!-- 1 PM -->
+    <div class="card agent" style="left:300px;top:90px;width:480px;height:100px">
+      <div class="badge">1</div>
+      <div class="body">
+        <div class="nm">PM 에이전트</div>
+        <div class="ds">과제 접수 → <b>과제 유형 분류(①~④)</b> → 해석 조건 번역 · 설계 브리프 생성. 적용 범위 밖 과제는 한계 명시 후 사람에게 에스컬레이션.</div>
+      </div>
+    </div>
+
+    <!-- 2 설계 (유형별 플레이북) -->
+    <div class="card agent" style="left:300px;top:212px;width:480px;height:232px;display:block">
+      <div style="display:flex;gap:12px;align-items:flex-start">
+        <div class="badge">2</div>
+        <div class="body">
+          <div class="nm">설계 에이전트 — 과제 유형별 탐색 플레이북 <span style="font-weight:600;color:var(--sub);font-size:11px">(분기)</span></div>
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="mini"><span class="no">①</span><span class="mn">제품 설계 검토</span><div class="md">설계변수 공간 탐색 — 열교환기·압축기·운전조건, 민감도 분석으로 핵심 변수 선별</div></div>
+        <div class="mini"><span class="no">②</span><span class="mn">응용 냉동사이클 적용성</span><div class="md">사이클 구성 공간 탐색 — 다단·캐스케이드·이젝터 등 구성 대안 성능·복잡도 비교</div></div>
+        <div class="mini"><span class="no">③</span><span class="mn">대체냉매 탐색</span><div class="md">냉매 후보 공간 탐색 — 물성 DB 스크리닝 후 성능·GWP·가연성 다목적 평가</div></div>
+        <div class="mini"><span class="no">④</span><span class="mn">신기술 연구개발</span><div class="md">기술 조사 → 모델 반영 → 적용 효과 정량화 및 연구 시나리오 도출</div></div>
+      </div>
+    </div>
+
+    <!-- 3 해석 (수렴) -->
+    <div class="card agent" style="left:300px;top:466px;width:480px;height:90px">
+      <div class="badge">3</div>
+      <div class="body">
+        <div class="nm">해석 에이전트 <span style="font-weight:600;color:var(--sub);font-size:11px">(공통 백본으로 수렴)</span></div>
+        <div class="ds">유형별 탐색 계획을 받아 케이스 자동 생성 → 1D 엔진 일괄 실행 → 수렴·실패 관리 → 후처리.</div>
+      </div>
+    </div>
+
+    <!-- 4 검증 -->
+    <div class="card agent" style="left:300px;top:578px;width:480px;height:90px">
+      <div class="badge">4</div>
+      <div class="body">
+        <div class="nm">검증 에이전트</div>
+        <div class="ds">에너지 밸런스 · 물성 유효범위 · 경향성 검사. 기준 위반 시 <b style="color:var(--red)">반려(재해석 지시)</b>, 통과 결과만 보고로 전달.</div>
+      </div>
+    </div>
+
+    <!-- 5 보고 -->
+    <div class="card agent" style="left:300px;top:690px;width:480px;height:106px">
+      <div class="badge">5</div>
+      <div class="body">
+        <div class="nm">보고 에이전트</div>
+        <div class="ds">파레토 프론트 · 검토 보고서 초안 생성.<br><b>유형별 산출물</b> — ① 추천 설계안 · ② 구성 비교표 · ③ 냉매 후보 순위표 · ④ 연구개발 보고서</div>
+      </div>
+    </div>
+
+    <!-- 사람 게이트 ② -->
+    <div class="pill" style="left:425px;top:818px;width:230px">사람 게이트 ② <small>최종 검토 · 확정</small></div>
+
+    <!-- 좌측 레일: 지식 자산 -->
+    <div class="card datac" style="left:24px;top:262px;width:182px;height:136px;display:block;padding:13px 15px">
+      <div class="nm" style="font-size:12px">지식 자산</div>
+      <div class="ds">· 과거 검토 사례·설계 지식 (RAG)<br>· 냉매 물성 · 규제(GWP) DB<br><span style="opacity:.8">→ 유형별 플레이북의 근거</span></div>
+    </div>
+
+    <!-- 좌측 레일: 1D 엔진 -->
+    <div class="card toolc" style="left:24px;top:466px;width:182px;height:90px;display:block;padding:13px 15px">
+      <div class="nm" style="font-size:12.5px;color:var(--indigo)">1D 사이클 해석 엔진<span style="font-size:9px;font-weight:800;background:var(--indigo);color:#fff;border-radius:6px;padding:2px 5px;margin-left:6px;vertical-align:1px">MCP</span></div>
+      <div class="ds">자체 개발 해석 프로그램<br>해석 호출 ⇄ 결과 반환</div>
+    </div>
+
+    <!-- 라벨 -->
+    <div class="lbl" style="left:552px;top:560px">검증 통과 결과만</div>
+    <div class="lbl red" style="left:788px;top:550px;text-align:center;background:var(--red-soft);border:1px solid var(--red-bd);padding:4px 7px;border-radius:8px">반려<br>재해석</div>
+  </div>
+
+  <div class="legend">
+    <div class="li"><span class="sw a"></span>AI 에이전트 (5)</div>
+    <div class="li"><span class="sw h"></span>사람 개입 게이트 (2곳)</div>
+    <div class="li"><span class="sw t"></span>도구 · MCP</div>
+    <div class="li"><span class="sw k"></span>지식 자산</div>
+    <div class="li"><span class="sw loop"></span>검증·반려 루프</div>
+  </div>
+</div>
+
+<!-- ============ 2팀 CYCLE-Master ============ -->
+<div class="canvas" id="c2">
+  <div class="head">
+    <div class="t">CYCLE-Master 서비스 구조도<small>사이클 진단 가상전문가 · 하나의 진단 루프(4단계)</small></div>
+    <div class="team">냉부해(냉동사이클을 부탁해)</div>
+  </div>
+
+  <div class="stage" style="height:612px">
+    <svg class="wires" viewBox="0 0 860 612">
+      <defs>
+        <marker id="g2" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto"><path d="M0,0 L8,4.5 L0,9 Z" fill="#9AA1AE"/></marker>
+        <marker id="r2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0,0.5 L7,4 L0,7.5 Z" fill="#E5484D"/></marker>
+      </defs>
+      <!-- 단계 연결 (x=420 하강) -->
+      <line x1="420" y1="166" x2="420" y2="186" stroke="#9AA1AE" stroke-width="1.8" marker-end="url(#g2)"/>
+      <line x1="420" y1="292" x2="420" y2="322" stroke="#9AA1AE" stroke-width="1.8" marker-end="url(#g2)"/>
+      <line x1="420" y1="442" x2="420" y2="462" stroke="#9AA1AE" stroke-width="1.8" marker-end="url(#g2)"/>
+      <!-- ★ 기각 시 가설 갱신 (레드 상승) -->
+      <line x1="484" y1="322" x2="484" y2="298" stroke="#E5484D" stroke-width="1.8" marker-end="url(#r2)"/>
+      <!-- 데이터 → 1단계 -->
+      <line x1="226" y1="118" x2="246" y2="118" stroke="#9AA1AE" stroke-width="1.8" marker-end="url(#g2)"/>
+      <!-- 지식 → 2단계 (점선) -->
+      <line x1="226" y1="240" x2="246" y2="240" stroke="#9AA1AE" stroke-width="1.5" stroke-dasharray="4 4" marker-end="url(#g2)"/>
+      <!-- 엔지니어 ↔ 2단계 -->
+      <line x1="652" y1="218" x2="672" y2="218" stroke="#9AA1AE" stroke-width="1.8" marker-end="url(#g2)"/>
+      <line x1="672" y1="252" x2="652" y2="252" stroke="#9AA1AE" stroke-width="1.8" marker-end="url(#g2)"/>
+      <!-- ★ 1D 시뮬 ↔ 3단계 (레드 왕복 = 가상 재시험) -->
+      <line x1="652" y1="360" x2="672" y2="360" stroke="#E5484D" stroke-width="1.8" marker-end="url(#r2)"/>
+      <line x1="672" y1="406" x2="652" y2="406" stroke="#E5484D" stroke-width="1.8" marker-end="url(#r2)"/>
+      <!-- 4단계 → 에스컬레이션 (점선) -->
+      <line x1="652" y1="506" x2="672" y2="506" stroke="#9AA1AE" stroke-width="1.5" stroke-dasharray="4 4" marker-end="url(#g2)"/>
+    </svg>
+
+    <!-- 사용 시나리오 칩 -->
+    <div class="chips" style="left:24px;top:18px">
+      <span class="cl">동일 프로세스가 적용되는 사용 시나리오 —</span>
+      <div class="chip">개발 시험 이상 진단</div>
+      <div class="chip">신뢰성 시험 판정</div>
+      <div class="chip">필드 이슈 분석</div>
+      <div class="chip">성능 미달 원인규명</div>
+    </div>
+
+    <!-- 1 즉시 판독 -->
+    <div class="card agent" style="left:246px;top:70px;width:406px;height:96px">
+      <div class="badge">1</div>
+      <div class="body">
+        <div class="nm">즉시 판독</div>
+        <div class="ds">데이터 업로드 즉시 이상 패턴 식별 · 1차 소견 제시 — 전문가 소집 대기 구간이 소멸.</div>
+      </div>
+    </div>
+
+    <!-- 2 가설 토론 -->
+    <div class="card agent" style="left:246px;top:186px;width:406px;height:106px">
+      <div class="badge">2</div>
+      <div class="body">
+        <div class="nm">가설 토론</div>
+        <div class="ds">원인 가설을 우선순위·물리적 근거와 함께 제시하고, 엔지니어의 현장 정보·반박을 반영해 가설을 갱신.</div>
+      </div>
+    </div>
+
+    <!-- 3 자가 검증 -->
+    <div class="card agent" style="left:246px;top:324px;width:406px;height:118px">
+      <div class="badge">3</div>
+      <div class="body">
+        <div class="nm">시뮬레이션 자가 검증 <span style="font-weight:600;color:var(--red);font-size:11px">= 가상 재시험</span></div>
+        <div class="ds">가설대로 1D 시뮬레이션을 스스로 실행, 실측 잔차로 가설을 채택/기각. 가설이 갈리면 판별력이 큰 추가 확인 항목을 역제안.</div>
+      </div>
+    </div>
+
+    <!-- 4 리포트 -->
+    <div class="card agent" style="left:246px;top:462px;width:406px;height:112px">
+      <div class="badge">4</div>
+      <div class="body">
+        <div class="nm">원인 확정 · 진단 리포트</div>
+        <div class="ds">검증 이력·근거·권고 대책이 포함된 리포트 자동 생성. 모든 가설의 확신도 미달 시 결론을 강요하지 않고 쟁점 정리 후 이관.</div>
+      </div>
+    </div>
+
+    <!-- 좌측 레일 -->
+    <div class="card datac" style="left:24px;top:70px;width:202px;height:96px;display:block;padding:13px 15px">
+      <div class="nm" style="font-size:12px">사이클 시험 데이터</div>
+      <div class="ds">P-h 선도 · 시계열 거동 업로드<br>(전 부서 공통 입력)</div>
+    </div>
+    <div class="card datac" style="left:24px;top:186px;width:202px;height:134px;display:block;padding:13px 15px">
+      <div class="nm" style="font-size:12px">지식 자산</div>
+      <div class="ds">· 고장 시그니처 라이브러리<br>&nbsp;&nbsp;(시뮬레이션 고장 주입 생성)<br>· 전문가 경험 지식 (RAG)</div>
+    </div>
+
+    <!-- 우측 레일 -->
+    <div class="card human" style="left:672px;top:186px;width:164px;height:106px;display:block;padding:13px 15px">
+      <div class="nm" style="font-size:12px">엔지니어 (전 부서)</div>
+      <div class="ds">선행·개발·신뢰성·생산<br>현장 정보 제공 · 반박</div>
+    </div>
+    <div class="card toolc" style="left:672px;top:324px;width:164px;height:118px;display:block;padding:13px 15px">
+      <div class="nm" style="font-size:12px;color:var(--indigo)">1D 사이클 시뮬레이션<span style="font-size:9px;font-weight:800;background:var(--indigo);color:#fff;border-radius:6px;padding:2px 5px;margin-left:6px;vertical-align:1px">MCP</span></div>
+      <div class="ds">가설대로 사이클 재현<br><span style="color:var(--red);font-weight:700">가설 → 재현 / 잔차 → 판정</span></div>
+    </div>
+    <div class="card human" style="left:672px;top:462px;width:164px;height:112px;display:block;padding:13px 15px">
+      <div class="nm" style="font-size:12px">전문가 에스컬레이션</div>
+      <div class="ds">확신도 미달 시<br>쟁점 정리 후 이관</div>
+    </div>
+
+    <!-- 라벨 -->
+    <div class="lbl red" style="left:498px;top:297px;background:var(--red-soft);border:1px solid var(--red-bd);padding:3px 8px;border-radius:8px">기각 시 가설 갱신 ↺</div>
+  </div>
+
+  <div class="legend">
+    <div class="li"><span class="sw a"></span>가상전문가의 진단 단계 (1→4)</div>
+    <div class="li"><span class="sw h"></span>사람 (엔지니어·전문가)</div>
+    <div class="li"><span class="sw t"></span>도구 · MCP</div>
+    <div class="li"><span class="sw k"></span>입력 데이터 · 지식 자산</div>
+    <div class="li"><span class="sw loop"></span>시뮬레이션 검증 루프 (가상 재시험)</div>
+  </div>
+</div>
+
+</body>
+</html>
