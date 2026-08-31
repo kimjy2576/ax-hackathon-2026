@@ -3,7 +3,7 @@
 import re, html
 
 CSS = """
-:root{--ink:#1F2430;--sub:#6B7280;--bd:#E4E7EE;--red:#E5484D;--red-s:#FFF1F2;--red-b:#F7B4B7;
+:root{--ink:#1F2430;--sub:#6B7280;--bd:#E4E7EE;--red:#E5484D;--red-s:#FFF1F2;--red-b:#F7B4B7;--ind-b:#C3C6F5;
 --ind:#6366F1;--ind-s:#F1F2FD;--ind-b:#C3C6F5;--gr:#F6F7F9;--gr-b:#C6CBD6;--amber:#8A6D1D;--amber-s:#FBF6E7;--amber-b:#E4D3A1}
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#EDEFF3;color:var(--ink);
@@ -58,6 +58,8 @@ font-size:10px;font-weight:800;padding:1px 8px;margin-top:5px}
 .note b{color:var(--amber)}
 .chk{background:var(--red-s);border:1px solid var(--red-b);border-radius:12px;padding:12px 16px;font-size:12px;color:#8A2A2E;margin:12px 0}
 mark{background:var(--red-s);color:var(--red);font-weight:700;border-radius:4px;padding:0 3px}
+.basis{background:var(--ind-s);border:1px solid var(--ind-b);border-radius:12px;padding:10px 16px;font-size:12px;color:#3A4356;margin:10px 0;line-height:1.65}
+.basis>b{color:var(--ind)}
 .svgbox{border:1px solid var(--bd);border-radius:14px;overflow:hidden;margin-top:10px}
 .svgbox svg{display:block;width:100%;height:auto}
 .foot{font-size:11px;color:var(--sub);text-align:center;margin-top:26px}
@@ -70,9 +72,11 @@ def inline(t):
     t = re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', t)
     t = re.sub(r'\[확인: *(.*?)\]', r'<mark>확인 필요: \1</mark>', t)
     t = re.sub(r'_\((.+?)\)_', r'<i style="color:var(--sub)">(\1)</i>', t)
-    for term in HIGHLIGHTS:
-        if term in t and f'>{term}<' not in t:
-            t = t.replace(term, f'<mark>{term}</mark>')
+    _terms = sorted(HIGHLIGHTS, key=len, reverse=True)
+    for i, term in enumerate(_terms):
+        t = t.replace(term, f'\x00{i}\x01')
+    for i, term in enumerate(_terms):
+        t = t.replace(f'\x00{i}\x01', f'<mark>{term}</mark>')
     return t
 
 def render_body(md, svg_inline, team_no):
@@ -135,6 +139,8 @@ def render_body(md, svg_inline, team_no):
             for r in rows[1:]: out.append('<tr>'+''.join(f'<td>{inline(c)}</td>' for c in r)+'</tr>')
             out.append('</table>')
             continue
+        elif l.startswith('!근거:'):
+            out.append(f'<div class="basis"><b>근거</b> — {inline(l[4:].strip())}</div>')
         elif l.startswith('> '):
             out.append(f'<div class="chk"><b>✓ 팀 확정 필요 — </b>{inline(l[2:].replace("동기화 필요: ",""))}</div>')
         elif l.startswith('- '):
@@ -196,5 +202,7 @@ def build(team_md_file, svg_file, out_file, team_no, service, teamname, field, p
 
 build('팀1_THERMA-Crew_지원서.md','THERMA-Crew_구조도.svg','팀1_THERMA-Crew_지원서.html',
       1,'THERMA-Crew','VirtualCycle선행Project','개발(HW)','가상팀 (Virtual Team)')
+build('팀1_THERMA-Crew_지원서_근거포함.md','THERMA-Crew_구조도.svg','팀1_THERMA-Crew_지원서_근거포함.html',
+      1,'THERMA-Crew (근거 주석판)','VirtualCycle선행Project','개발(HW)','가상팀 (Virtual Team)')
 build('팀2_CYCLE-Master_지원서.md','CYCLE-Master_구조도.svg','팀2_CYCLE-Master_지원서.html',
       2,'CYCLE-Master','냉부해(냉동사이클을 부탁해)','개발(HW)','가상직원 (Virtual Employee)')
