@@ -58,8 +58,8 @@ font-size:10px;font-weight:800;padding:1px 8px;margin-top:5px}
 .note b{color:var(--amber)}
 .chk{background:var(--red-s);border:1px solid var(--red-b);border-radius:12px;padding:12px 16px;font-size:12px;color:#8A2A2E;margin:12px 0}
 mark{background:var(--red-s);color:var(--red);font-weight:700;border-radius:4px;padding:0 3px}
-.basis{background:var(--ind-s);border:1px solid var(--ind-b);border-radius:12px;padding:10px 16px;font-size:12px;color:#3A4356;margin:10px 0;line-height:1.65}
-.basis>b{color:var(--ind)}
+.srcnote{font-size:12.5px;color:#4B5563;margin:2px 0 2px 8px;line-height:1.65}
+.srcnote.lbl0{margin-top:10px;font-weight:800;color:#374151}
 .svgbox{border:1px solid var(--bd);border-radius:14px;overflow:hidden;margin-top:10px}
 .svgbox svg{display:block;width:100%;height:auto}
 .foot{font-size:11px;color:var(--sub);text-align:center;margin-top:26px}
@@ -140,10 +140,9 @@ def render_body(md, svg_inline, team_no):
             out.append('</table>')
             continue
         elif l.startswith('[산출 근거]'):
-            items=[]; i+=1
+            out.append('<p class="srcnote lbl0">[산출 근거]</p>'); i+=1
             while i<len(lines) and lines[i].startswith('· '):
-                items.append(lines[i][2:]); i+=1
-            out.append('<div class="basis"><b>산출 근거</b><ul style="margin:4px 0 0 4px">'+''.join(f'<li>{inline(x)}</li>' for x in items)+'</ul></div>')
+                out.append(f'<p class="srcnote">· {inline(lines[i][2:])}</p>'); i+=1
             continue
         elif l.startswith('> '):
             out.append(f'<div class="chk"><b>✓ 팀 확정 필요 — </b>{inline(l[2:].replace("동기화 필요: ",""))}</div>')
