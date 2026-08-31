@@ -139,8 +139,12 @@ def render_body(md, svg_inline, team_no):
             for r in rows[1:]: out.append('<tr>'+''.join(f'<td>{inline(c)}</td>' for c in r)+'</tr>')
             out.append('</table>')
             continue
-        elif l.startswith('!근거:'):
-            out.append(f'<div class="basis"><b>근거</b> — {inline(l[4:].strip())}</div>')
+        elif l.startswith('[산출 근거]'):
+            items=[]; i+=1
+            while i<len(lines) and lines[i].startswith('· '):
+                items.append(lines[i][2:]); i+=1
+            out.append('<div class="basis"><b>산출 근거</b><ul style="margin:4px 0 0 4px">'+''.join(f'<li>{inline(x)}</li>' for x in items)+'</ul></div>')
+            continue
         elif l.startswith('> '):
             out.append(f'<div class="chk"><b>✓ 팀 확정 필요 — </b>{inline(l[2:].replace("동기화 필요: ",""))}</div>')
         elif l.startswith('- '):
