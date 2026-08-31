@@ -63,11 +63,16 @@ mark{background:var(--red-s);color:var(--red);font-weight:700;border-radius:4px;
 .foot{font-size:11px;color:var(--sub);text-align:center;margin-top:26px}
 """
 
+HIGHLIGHTS = ['40시간','1,920시간','2,400시간','3,840시간','960시간','5,760~6,240시간','6,240시간','3.3명','12건','60건','432 Hr','2,160 Hr','90%','50% 이상','12명','25명','80명','105명','8조원','800억원','3조원','500만원','연 20회','1.0억원','300만원','연 10건','0.3억원','1.3억원','효과율 1%','효율 1%']
+
 def inline(t):
     t = html.escape(t)
     t = re.sub(r'\*\*(.+?)\*\*', r'<b>\1</b>', t)
     t = re.sub(r'\[확인: *(.*?)\]', r'<mark>확인 필요: \1</mark>', t)
     t = re.sub(r'_\((.+?)\)_', r'<i style="color:var(--sub)">(\1)</i>', t)
+    for term in HIGHLIGHTS:
+        if term in t and f'>{term}<' not in t:
+            t = t.replace(term, f'<mark>{term}</mark>')
     return t
 
 def render_body(md, svg_inline, team_no):
