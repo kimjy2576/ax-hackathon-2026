@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>팀1 THERMA-Crew — 정량 수치 근거 보고서</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+<style>
+:root{--ink:#1F2430;--sub:#6B7280;--bd:#E4E7EE;--red:#E5484D;--red-s:#FFF1F2;--red-b:#F7B4B7;
+--ind:#6366F1;--ind-s:#F1F2FD;--ind-b:#C3C6F5;--gr:#F6F7F9;--amber-s:#FBF6E7;--amber:#8A6D1D;--amber-b:#E4D3A1}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#EDEFF3;color:var(--ink);
+word-break:keep-all;line-height:1.7;padding:40px 16px 80px}
+.wrap{max-width:920px;margin:0 auto}
+.hero{background:#fff;border:1px solid var(--bd);border-radius:18px;padding:28px 34px;margin-bottom:16px}
+.hero .k{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--red);margin-bottom:6px}
+.hero h1{font-size:23px;font-weight:800;letter-spacing:-.01em}
+.hero p{font-size:12.5px;color:var(--sub);margin-top:8px}
+.hero p b{color:var(--red)}
+.gtitle{display:flex;align-items:center;gap:10px;margin:24px 4px 10px;font-size:15px;font-weight:800}
+.gtitle .no{width:26px;height:26px;border-radius:999px;background:var(--red);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800}
+details{background:#fff;border:1px solid var(--bd);border-radius:14px;margin-bottom:8px;overflow:hidden}
+details[open]{border-color:var(--ind-b)}
+summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:12px;padding:14px 18px}
+summary::-webkit-details-marker{display:none}
+summary .name{flex:1;font-size:13.5px;font-weight:800}
+summary .name small{display:block;font-size:10.5px;font-weight:600;color:var(--sub);margin-top:1px}
+summary .val{font-size:13px;font-weight:800;color:var(--red);background:var(--red-s);border:1px solid var(--red-b);border-radius:999px;padding:4px 13px;white-space:nowrap}
+summary .rng{font-size:10.5px;font-weight:700;color:var(--sub);background:var(--gr);border:1px solid var(--bd);border-radius:999px;padding:4px 10px;white-space:nowrap}
+summary .arr{flex:none;width:20px;height:20px;color:#B4BAC7;transition:transform .15s}
+details[open] .arr{transform:rotate(90deg)}
+.detail{border-top:1px solid var(--bd);padding:14px 18px 18px;background:#FBFCFE}
+.detail p{font-size:12.5px;color:#374151;margin:7px 0}
+.detail p b{color:var(--ink)}
+.detail .case{background:var(--ind-s);border:1px solid var(--ind-b);border-radius:10px;padding:10px 14px;font-size:12px;color:#3A4356;margin:8px 0}
+.detail .case b{color:var(--ind)}
+.detail .guard{background:var(--amber-s);border:1px solid var(--amber-b);border-radius:10px;padding:10px 14px;font-size:12px;color:var(--amber);margin:8px 0}
+table{border-collapse:collapse;width:100%;margin:8px 0;font-size:12px}
+th,td{border:1px solid var(--bd);padding:6px 10px;text-align:left;background:#fff}
+th{background:var(--gr);font-weight:800;font-size:11px;color:var(--sub)}
+td b{color:var(--red)}
+.qa summary .name{font-weight:800;color:var(--ink)}
+.qa summary .q{width:24px;height:24px;border-radius:8px;background:var(--red-s);color:var(--red);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;flex:none}
+.foot{font-size:11px;color:var(--sub);text-align:center;margin-top:24px}
+.ctrl{display:flex;gap:8px;justify-content:flex-end;margin:0 4px 10px}
+.ctrl button{font-family:inherit;font-size:11px;font-weight:700;color:var(--sub);background:#fff;border:1px solid var(--bd);border-radius:999px;padding:6px 14px;cursor:pointer}
+.ctrl button:hover{border-color:var(--red-b);color:var(--ink)}
+</style>
+</head>
+<body><div class="wrap">
+
+<div class="hero">
+  <div class="k">2026 AX HACKATHON · 팀 검토용</div>
+  <h1>팀1 THERMA-Crew — 정량 수치 근거 보고서</h1>
+  <p>지원서에 기입된 모든 정량 수치의 <b>산출 근거·합리적 범위·방어 논리</b>를 정리했습니다. 각 항목을 누르면 근거가 펼쳐집니다. 지원서 HTML의 <b>빨간 하이라이트</b>가 본 보고서의 검토 대상이며, 값을 바꾸기로 합의하면 Section 3·6·7을 함께 갱신합니다.</p>
+</div>
+
+<div class="ctrl"><button onclick="document.querySelectorAll('details').forEach(d=>d.open=true)">전체 펼치기</button><button onclick="document.querySelectorAll('details').forEach(d=>d.open=false)">전체 접기</button></div>
+
+<div class="gtitle"><span class="no">3</span>문제정의 (Section 3)</div>
+
+<details>
+<summary><span class="name">X — 검토 1건의 총 인적공수<small>사이클 설계·해석 검토 1건에 드는 사람 시간</small></span><span class="val">40시간</span><span class="rng">32~64h</span><svg class="arr" viewBox="0 0 20 20" fill="none"><path d="M7 5l6 5-6 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+<div class="detail">
+<p>사이클 검토는 해석 1회 실행이 아니라 <b>조건 정의부터 보고까지의 전체 프로세스</b>다. 실측 기준 해석 자체는 1시간 건조 사이클당 약 2분 15초에 불과하며, 공수의 대부분은 조건 정의·데이터 정합·판단·재검증에 든다.</p>
+<table><tr><th>작업</th><th>추정 공수</th></tr>
+<tr><td>문제 및 요구조건 정의</td><td>4시간</td></tr>
+<tr><td>데이터 준비·모델 입력</td><td>8시간</td></tr>
+<tr><td>Case 구성 및 해석 반복</td><td>12시간</td></tr>
+<tr><td>실험·기준 데이터 비교(정합)</td><td>8시간</td></tr>
+<tr><td>전문가 리뷰·재검토</td><td>4시간</td></tr>
+<tr><td>보고서 작성</td><td>4시간</td></tr>
+<tr><td><b>합계</b></td><td><b>40시간</b></td></tr></table>
+<div class="case"><b>근거 사례</b> — ① 멀티드럼 플랫폼 검토: 증발기·응축기·압축기·EEV·팬(스크롤)·드럼·필터 등 7개 핵심 컴포넌트의 설계변수를 다룸. VX 600 데이터 정합은 RMC → EEV 개도 → 증발·응축 압력을 순차로 맞추는 반복 작업. ② VX Maxi MCC 검토: Path·Slab 두께·FPI·배열에 대해 풍량·전열면적·압손·열량을 비교하는 다수 Case 설계공간 탐색.</div>
+<div class="guard"><b>범위·방어</b> — 보수 32h / 공격 64h(재시험·시료 제작 포함 시 64h 이상). 지원서 문구가 "설계·해석 검토"이므로 재시험 공수를 제외한 40h가 과장 논란 없는 대표값.</div>
+</div>
+</details>
+
+<details>
+<summary><span class="name">M — 제품군당 연간 검토 건수<small>한 제품군에서 연간 발생하는 의미 있는 설계 검토</small></span><span class="val">12건/년</span><span class="rng">8~15건</span><svg class="arr" viewBox="0 0 20 20" fill="none"><path d="M7 5l6 5-6 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+<div class="detail">
+<p>한 제품군에서 반복 발생하는 검토 유형(10종): 열교환기 사양·배열 / MCC Path / 압축기 용량·주파수 / EEV 개도·과열도 / 냉매 봉입량 / 팬 RPM·순환풍량 / 공기측 압손-성능 Trade-off / 에너지·스피드코스 운전점 / 모델별 데이터 정합 / 이상성능 원인분석.</p>
+<div class="case"><b>근거 사례</b> — 주간업무(HPWD_W28)에서 하나의 성능 문제에 과열도·팬 RPM·압축기 Hz·기동로직 등 복수 개선안이 반복 검토됨. HVAC·사이클 토론방에서 냉매량·EEV·Fan RPM·압축기 Hz·열교환기 열수 변경 검토가 상시 진행 — 제품당 연간 한 자릿수를 넘는 검토 수요가 구조적으로 발생.</div>
+<div class="guard"><b>범위·선택</b> — 보수 분기 2건=8건 / 기준 월 1건=12건 / 적극 12~15건. 설명이 쉽고 과장 논란이 적은 12건 채택.</div>
+</div>
+</details>
+
+<details>
+<summary><span class="name">P — 대상 제품군 수<small>사이클 채용 제품군 (지원서는 2단 표기)</small></span><span class="val">4개(+식기세척기)</span><span class="rng">4~5개</span><svg class="arr" viewBox="0 0 20 20" fill="none"><path d="M7 5l6 5-6 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+<div class="detail">
+<p>현재 채용: 냉장고, 건조기·HPWD, 스타일러, 정수기(4개). 선행 검토 중: 식기세척기(+1).</p>
+<div class="guard"><b>사실관계 보호</b> — 지원서는 "현재 4개 기준 연 1,920시간 → 식기세척기 포함 시 약 2,400시간"의 2단 표현을 사용 (40h × 12건 × 4~5개). 식기세척기를 채용 완료로 단정하지 않음.</div>
+</div>
+</details>
+
+<details>
+<summary><span class="name">겸무 선행연구 투입<small>제품 선행연구팀들의 사이클 선행 겸무 총량</small></span><span class="val">3,840시간/년</span><span class="rng">2,560~6,400h</span><svg class="arr" viewBox="0 0 20 20" fill="none"><path d="M7 5l6 5-6 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+<div class="detail">
+<p>팀당 모델: <b>2명 × 주당 10시간 × 48주 = 960시간/년</b> (실무 담당 1명 주 6~8h + 리뷰·지원 1명 이상 주 2~4h의 분산 투입, 팀당 약 0.5 FTE). 관련 선행연구팀: 냉장고·건조기/세탁·스타일러·정수기 중심 <b>4개 팀</b> → 960 × 4 = 3,840시간/년.</p>
+<div class="case"><b>근거 사례</b> — 기존 AX 과제 자료: 컨셉 설계 Process Modeling 6.87MM, Agent 적용 목표 4.81MM(30% 단축) — 설계·해석 업무가 수개월 규모로 누적됨을 뒷받침. AX 회의록: 건조기 성능예측용 전체 컴포넌트 입력인자 정의·데이터 구조화 필요, 제품별 부품설계 변경이 적어 데이터 축적이 어렵다는 기록 — 겸무 연구가 모델·데이터 구축과 리뷰에 지속 투입되는 업무임을 보여줌.</div>
+</div>
+</details>
+
+<details>
+<summary><span class="name">합산 비효율<small>중복 검토 + 겸무 투입 (성격이 다른 두 층위)</small></span><span class="val">5,760~6,240h ≈ 3.3 FTE</span><span class="rng">—</span><svg class="arr" viewBox="0 0 20 20" fill="none"><path d="M7 5l6 5-6 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+<div class="detail">
+<p>중복 검토(1,920~2,400h) + 겸무 투입(3,840h). 1인 연간 실가용 연구시간 약 1,800~1,900h 기준 <b>약 3.3명 상당</b>.</p>
+<div class="guard"><b>표현 주의</b> — 감축 가능 인력이 아니라, 여러 조직에 분산되어 중복·대기·재시험·중단 형태로 소모되는 <b>FTE 환산 업무량</b>으로 서술(지원서 반영 완료). 검토 대행과 선행 겸무는 별개 업무라 합산에 이중계상 없음.</div>
+</div>
+</details>
+
+<div class="gtitle"><span class="no">6</span>확대전개 모수 (Section 6)</div>
+
+<details>
+<summary><span class="name">N — 1차 적용 대상 인원<small>세탁건조기 사이클 검토 직접 수행 인력</small></span><span class="val">12명</span><span class="rng">8~15명</span><svg class="arr" viewBox="0 0 20 20" fill="none"><path d="M7 5l6 5-6 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+<div class="detail">
+<p>관련 인력 풀: 세탁기차세대플랫폼Task, 건조기선행연구팀, Cycle개발Project 협업 인원, CFD/MBD 지원 인원 등 <b>약 18~20명</b>. 이 중 사이클 검토를 직접 수행하는 핵심 인력 기준 12명. (보수 8 / 권장 12 / 공격 15)</p>
+</div>
+</details>
+
+<details>
+<summary><span class="name">전문가 검토 일치율 목표<small>1차 적용 성공 기준 ①</small></span><span class="val">90% 이상</span><span class="rng">80~95%</span><svg class="arr" viewBox="0 0 20 20" fill="none"><path d="M7 5l6 5-6 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+<div class="detail"><p>AI/Agent 평가 과제의 통상 기준(최소 80 / 권장 90 / 매우 공격적 95)에서 권장값 채택. 리드타임 단축 목표는 별도로 <b>50% 이상</b>(공수 90% 절감 대비 보수적 설정).</p></div>
+</details>
+
+<details>
+<summary><span class="name">M — HS 확대 인원<small>HS 제품군별 사이클 검토 수행 인원</small></span><span class="val">25명</span><span class="rng">20~35명</span><svg class="arr" viewBox="0 0 20 20" fill="none"><path d="M7 5l6 5-6 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+<div class="detail"><p>제품군별 사이클 검토 인력은 통상 선행 2~4명 + 설계 2~4명 → <b>평균 5명 × 5개 제품군 = 25명</b>. (보수 20 / 권장 25 / 공격 35)</p></div>
+</details>
+
+<details>
+<summary><span class="name">K — ES 확대 인원<small>ES 제품군별 설계·해석 수행 인원</small></span><span class="val">80명</span><span class="rng">60~120명</span><svg class="arr" viewBox="0 0 20 20" fill="none"><path d="M7 5l6 5-6 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+<div class="detail"><p>대상: AI DC Chiller, Commercial Chiller, RAC, CAC, Multi V, Dehumidifier 등. 공조는 사이클이 핵심 기술이라 제품군당 설계·해석·제어·선행 포함 <b>10~20명</b> 규모 → 보수 60 / 권장 80 / 공격 120에서 80명 채택.</p>
+<p>단계별 누적 잠재 사용자: <b>12명 → 25명 → 105명</b>(25+80).</p></div>
+</details>
+
+<div class="gtitle"><span class="no">7</span>기대효과 (Section 7)</div>
+
+<details>
+<summary><span class="name">생산성 향상 산식<small>발생횟수·절감시간·향상율 (2단 시나리오)</small></span><span class="val">432 / 2,160 Hr · 90%</span><span class="rng">12건/60건</span><svg class="arr" viewBox="0 0 20 20" fill="none"><path d="M7 5l6 5-6 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+<div class="detail">
+<table><tr><th>항목</th><th>1차 적용(세탁건조기)</th><th>HS 확대</th></tr>
+<tr><td>AS-IS / TO-BE</td><td>40h / 4h</td><td>40h / 4h</td></tr>
+<tr><td>연간 발생횟수</td><td><b>12건</b></td><td><b>60건</b> (12건 × 5개 제품군)</td></tr>
+<tr><td>연간 총 절감</td><td><b>432 Hr</b></td><td><b>2,160 Hr</b></td></tr>
+<tr><td>향상율</td><td colspan="2"><b>90%</b> = (40−4)/40</td></tr></table>
+<p>Section 3의 발생 빈도(M=12)와 동일 기준 — 양식의 "Section 3 일치" 요구 충족. AS-IS/TO-BE는 1인 기준 시간으로 정의해 투입인원(1명)과의 이중계상 배제.</p>
+</div>
+</details>
+
+<details>
+<summary><span class="name">A — 대상 제품군 연매출<small>HS 히트펌프 채용 제품군 합산 (보수 추정)</small></span><span class="val">약 8조원</span><span class="rng">7~9조</span><svg class="arr" viewBox="0 0 20 20" fill="none"><path d="M7 5l6 5-6 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+<div class="detail">
+<table><tr><th>제품군</th><th>추정 연매출</th></tr>
+<tr><td>냉장고</td><td>4~5조</td></tr>
+<tr><td>세탁건조</td><td>2~3조</td></tr>
+<tr><td>스타일러</td><td>0.3~0.5조</td></tr>
+<tr><td>정수기</td><td>0.5~1조</td></tr>
+<tr><td><b>합계</b></td><td><b>약 7~9조 → 대표값 8조</b></td></tr></table>
+</div>
+</details>
+
+<details>
+<summary><span class="name">b — 등급 상향 효과율 → 매출 효과<small>에너지등급 1단계 상승 시 판매량·ASP 효과</small></span><span class="val">1% → 연 800억원</span><span class="rng">0.5~2%</span><svg class="arr" viewBox="0 0 20 20" fill="none"><path d="M7 5l6 5-6 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+<div class="detail">
+<p>보수 0.5% / 권장 1% / 공격 2%에서 1% 채택 → 8조 × 1% = <b>연 약 800억원</b>.</p>
+<div class="guard"><b>방어</b> — "효율 1% 개선이 등급 상향으로 이어질 경우"라는 조건부 기대치로 서술했고, 제품군별 실적 데이터로 보정한다는 근거 문단 포함. 확실성 축은 비용 절감 1.3억(단가 실적 기반)이 별도로 받침.</div>
+</div>
+</details>
+
+<details>
+<summary><span class="name">C — 규제 영향권 매출 (매출 방어)<small>냉매 규제(EU F-gas·GWP) 영향권</small></span><span class="val">약 3조원</span><span class="rng">보수 추정</span><svg class="arr" viewBox="0 0 20 20" fill="none"><path d="M7 5l6 5-6 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+<div class="detail"><p>EU·UK·EFTA 등 유럽 중심 냉매 규제 영향권 시장 매출의 보수 추정. HS 전체 매출의 상당 부분이 영향권이나 보수적으로 3조로 한정.</p></div>
+</details>
+
+<details>
+<summary><span class="name">비용 절감 (인건비 외)<small>시제 제작 + 외주 해석</small></span><span class="val">연 1.3억원</span><span class="rng">1.0 + 0.3억</span><svg class="arr" viewBox="0 0 20 20" fill="none"><path d="M7 5l6 5-6 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+<div class="detail">
+<p><b>시제</b>: 1회 약 500만원(배관 수정·열교환기 변경·시료 제작·성능 시험 포함) × 연 20회 감소 = <b>1.0억/년</b>.<br><b>외주 해석</b>: CFD·Coil Designer·사이클 해석 건당 200~500만원 중 300만원 × 연 10건 감소 = <b>0.3억/년</b>.</p>
+</div>
+</details>
+
+<div class="gtitle"><span class="no">Q</span>예상 Q&amp;A 방어 노트</div>
+
+<details class="qa"><summary><span class="q">Q1</span><span class="name">"6,240시간은 이중계상 아닌가?"</span><svg class="arr" viewBox="0 0 20 20" fill="none"><path d="M7 5l6 5-6 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+<div class="detail"><p>중복 검토(제품팀의 설계 검토 대행 수요)와 겸무 선행연구(신기술·냉매 연구)는 <b>별개 업무 층위</b>로, 문제정의에 첫째/둘째로 구분 서술되어 있다.</p></div></details>
+
+<details class="qa"><summary><span class="q">Q2</span><span class="name">"3.3명을 줄일 수 있다는 뜻인가?"</span><svg class="arr" viewBox="0 0 20 20" fill="none"><path d="M7 5l6 5-6 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+<div class="detail"><p>아니다. 감축 인력이 아닌 <b>FTE 환산 업무량</b>이며, 분산·중복·대기 형태로 소모되는 시간을 뜻한다고 지원서에 명시했다.</p></div></details>
+
+<details class="qa"><summary><span class="q">Q3</span><span class="name">"800억은 과장 아닌가?"</span><svg class="arr" viewBox="0 0 20 20" fill="none"><path d="M7 5l6 5-6 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+<div class="detail"><p>조건부 기대치(효율 1% → 등급 상향 시)로 명시했고 실적 데이터 보정을 전제했다. 확실성이 필요한 축은 <b>단가 실적 기반의 비용 절감 1.3억</b>이 별도로 받친다.</p></div></details>
+
+<details class="qa"><summary><span class="q">Q4</span><span class="name">"식기세척기는 아직 채용 전 아닌가?"</span><svg class="arr" viewBox="0 0 20 20" fill="none"><path d="M7 5l6 5-6 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+<div class="detail"><p>맞다. 그래서 본문은 "현재 4개 기준 1,920시간"과 "식기세척기 포함 시 2,400시간"을 <b>구분 표기</b>해 사실관계를 보호한다.</p></div></details>
+
+<details class="qa"><summary><span class="q">Q5</span><span class="name">"검토 1건에 40시간은 너무 길지 않나?"</span><svg class="arr" viewBox="0 0 20 20" fill="none"><path d="M7 5l6 5-6 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></summary>
+<div class="detail"><p>해석 실행(분 단위)이 아니라 조건 정의·데이터 정합·리뷰·보고를 포함한 <b>총 공수</b>이며 공수 분해표로 제시 가능. 재시험 포함 시 64시간 이상이나 보수적으로 제외했다.</p></div></details>
+
+<div class="foot">값 변경 합의 시 지원서 Section 3·6·7 및 근거보고서를 함께 갱신할 것 · 2026 AX HACKATHON 팀1</div>
+</div></body>
+</html>
