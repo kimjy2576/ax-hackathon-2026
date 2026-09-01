@@ -99,10 +99,10 @@ agent_card(90,100,"1","PM 에이전트",None,
   [[("과제 접수 → ",500,SUB),("과제 유형 분류(①~④)",800,INK),(" → 해석 조건 번역 · 설계 브리프 생성. 적용 범위",500,SUB)],
    "밖 과제는 한계 명시 후 사람에게 에스컬레이션."],142)
 
-# 설계(플레이북) 그룹
+# 설계(탐색 전략) 그룹
 c1.append(rect(300,Y(212),480,232,IND_S,IND_B))
 c1.append(badge(316,Y(226),"2"))
-c1.append(f'<text x="358" y="{Y(242)}" font-size="13.5"><tspan font-weight="800" fill="{INK}">설계 에이전트 — 과제 유형별 탐색 플레이북 </tspan><tspan font-size="11" font-weight="600" fill="{SUB}">(분기)</tspan></text>')
+c1.append(f'<text x="358" y="{Y(242)}" font-size="13.5"><tspan font-weight="800" fill="{INK}">설계 에이전트 — 과제 유형별 탐색 전략 </tspan><tspan font-size="11" font-weight="600" fill="{SUB}">(분기)</tspan></text>')
 minis=[("①","제품 설계 검토",["설계변수 공간 탐색 — 열교환기·압축기·","운전조건, 민감도 분석으로 핵심 변수 선별"]),
        ("②","응용 냉동사이클 적용성",["사이클 구성 공간 탐색 — 다단·캐스케이드·","이젝터 등 구성 대안 성능·복잡도 비교"]),
        ("③","대체냉매 탐색",["냉매 후보 공간 탐색 — 물성 DB 스크리닝 후","성능·GWP·가연성 다목적 평가"]),
@@ -128,7 +128,7 @@ agent_card(706,106,"5","보고 에이전트",None,
 # 좌측 레일
 c1.append(rect(24,Y(262),182,136,GR_S,BD))
 c1.append(txt(39,Y(284),"지식 자산",12,800,INK))
-c1.append(lines(39,Y(305),["· 과거 검토 사례·설계 지식","  (RAG)","· 냉매 물성 · 규제(GWP) DB","→ 유형별 플레이북의 근거"],lh=18))
+c1.append(lines(39,Y(305),["· 과거 검토 사례·설계 지식","  (RAG)","· 냉매 물성 · 규제(GWP) DB","→ 유형별 탐색 전략의 근거"],lh=18))
 c1.append(rect(24,Y(466),182,90,"#fff",IND))
 c1.append(f'<text x="39" y="{Y(488)}" font-size="12.5" font-weight="800" fill="{IND}">1D 사이클 해석 엔진</text>')
 c1.append(rect(160,Y(477),34,15,IND,"none",rx=6,sw=0)); c1.append(txt(177,Y(488),"MCP",9,800,"#fff",anchor="middle"))
