@@ -65,11 +65,11 @@ def chip(x,y,text,w=None,fg="#4B5563",bg="#fff",bd=BD,size=10.5):
     w = w or (len(text)*9.4+24)
     return rect(x,y,w,24,bg,bd,rx=12,sw=1)+txt(x+w/2,y+16,text,size,700,fg,anchor="middle"), w
 
-# ================= C1 : THERMA-Crew =================
+# ================= C1 : EXACYCLE =================
 OY=72; W=860; H1=OY+888+50
 c1=[f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H1}" viewBox="0 0 {W} {H1}" font-family="{FONT}">',
     DEFS, rect(0.75,0.75,W-1.5,H1-1.5,"#fff",BD,rx=18),
-    header("THERMA-Crew 서비스 구조도","순방향(요구사양 → 설계안) · 과제 유형별 분기 → 공통 백본 수렴","VirtualCycle선행Project")]
+    header("EXACYCLE 서비스 구조도","순방향(요구사양 → 설계안) · 과제 유형별 분기 → 공통 백본 수렴","VirtualCycle선행Project")]
 def Y(y): return y+OY
 
 # 스파인·연결선
@@ -145,7 +145,7 @@ c1.append(txt(814,Y(578),"재해석",10,700,RED,anchor="middle"))
 c1.append(f'<line x1="0" y1="{OY+888}" x2="{W}" y2="{OY+888}" stroke="{BD}" stroke-width="1"/>')
 c1.append(legend([("a","AI 에이전트 (5)"),("h","사람 개입 게이트 (2곳)"),("t","도구 · MCP"),("k","지식 자산"),("loop","검증·반려 루프")],OY+888+31))
 c1.append('</svg>')
-open('THERMA-Crew_구조도.svg','w',encoding='utf-8').write(''.join(c1))
+open('EXACYCLE_구조도.svg','w',encoding='utf-8').write(''.join(c1))
 
 # ================= C2 : CYCLE-Master =================
 H2=OY+612+50

@@ -2,7 +2,7 @@
 """팀1 지원서 → 근거 주석판 MD + 접수용 TXT 재생성 (본문 수정 후 이 스크립트만 실행)"""
 import re
 
-s = open('팀1_THERMA-Crew_지원서.md', encoding='utf-8').read()
+s = open('팀1_EXACYCLE_지원서.md', encoding='utf-8').read()
 
 ins = [
  ('응용 냉동사이클 적용성 검토, 대체냉매 탐색, 신기술 연구개발 같은 핵심 과제들이 해마다 이월되는 이유가 여기에 있다.',
@@ -48,7 +48,7 @@ for anchor, note in ins:
     assert anchor in s, ('anchor not found: ' + anchor[:40])
     s = s.replace(anchor, anchor + '\n\n' + note)
 s = s.replace('# 1팀 — VirtualCycle선행Project', '# 1팀 — VirtualCycle선행Project (근거 주석판)')
-open('팀1_THERMA-Crew_지원서_근거포함.md', 'w', encoding='utf-8').write(s)
+open('팀1_EXACYCLE_지원서_근거포함.md', 'w', encoding='utf-8').write(s)
 print('근거포함 md regenerated')
 
 # ---------- 접수용 TXT ----------

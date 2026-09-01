@@ -4,14 +4,14 @@
 
 | 팀 | AI 서비스 | 유형 | 분야 |
 |---|---|---|---|
-| VirtualCycle선행Project | **THERMA-Crew** — 열시스템 가상 선행연구팀 (5 에이전트) | 가상팀 | 개발(HW) |
+| VirtualCycle선행Project | **EXACYCLE** — 열시스템 가상 선행연구팀 (5 에이전트) | 가상팀 | 개발(HW) |
 | 냉부해(냉동사이클을 부탁해) | **CYCLE-Master** — 사이클 진단 가상전문가 (토론+시뮬레이션 검증 루프) | 가상직원 | 개발(HW) |
 
 ## 저장소 구조
 
 ```
 docs/                  지원서 원문 (Markdown) — 접수 사이트 복붙용
-  ├── 팀1_THERMA-Crew_지원서.md
+  ├── 팀1_EXACYCLE_지원서.md
   ├── 팀2_CYCLE-Master_지원서.md
   └── AX_해커톤_지원서.md          # 두 팀 통합 작업 문서 (원본)
 applications-html/     지원서 한눈에 보기 (HTML, 브라우저로 열기)
