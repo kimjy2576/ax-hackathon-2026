@@ -16,9 +16,9 @@
 
 ---
 
-# 1팀 — VirtualCycle선행Project (근거 주석판)
+# 1팀 — EXACYCLE
 
-- **팀명**: VirtualCycle선행Project (확정) — 사내 실존 팀명 "Cycle개발Project"와 한 쌍을 이루는 네이밍. 개발Project 앞단의 선행연구를 가상화했다는 콘셉트가 팀명에서 완결
+- **팀명**: EXACYCLE (확정) — 사내 실존 팀명 "Cycle개발Project"와 한 쌍을 이루는 네이밍. 개발Project 앞단의 선행연구를 가상화했다는 콘셉트가 팀명에서 완결
 - **주제명**: EXACYCLE: 요구사양에서 설계안까지, 열시스템 개발을 자율 수행하는 가상 R&D 팀
 - **분야**: 개발(HW)
 - **제안 유형**: 가상팀 (Virtual Team)

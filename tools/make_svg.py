@@ -69,7 +69,7 @@ def chip(x,y,text,w=None,fg="#4B5563",bg="#fff",bd=BD,size=10.5):
 OY=72; W=860; H1=OY+888+50
 c1=[f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H1}" viewBox="0 0 {W} {H1}" font-family="{FONT}">',
     DEFS, rect(0.75,0.75,W-1.5,H1-1.5,"#fff",BD,rx=18),
-    header("EXACYCLE 서비스 구조도","순방향(요구사양 → 설계안) · 과제 유형별 분기 → 공통 백본 수렴","VirtualCycle선행Project")]
+    header("EXACYCLE 서비스 구조도","순방향(요구사양 → 설계안) · 과제 유형별 분기 → 공통 백본 수렴","EXACYCLE")]
 def Y(y): return y+OY
 
 # 스파인·연결선
