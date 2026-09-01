@@ -38,8 +38,19 @@ s = s.replace('# 1팀 — VirtualCycle선행Project', '# 1팀 — VirtualCycle�
 open('팀1_EXACYCLE_지원서_근거포함.md', 'w', encoding='utf-8').write(s)
 print('근거포함 md regenerated')
 
+# ---------- 접수 최적판: S7 중복 블록 2개 제거 (전용 근거칸과 중복) ----------
+opt = s
+for blk_head in ['· 발생횟수 12건/60건', '· A = 8조원']:
+    i = opt.find('[산출 근거]\n' + blk_head)
+    assert i > 0, blk_head
+    j = opt.find('\n\n', i)
+    opt = opt[:i].rstrip() + opt[j:]
+opt = opt.replace('(근거 주석판)', '(접수 최적판 — S3·6 근거 유지, S7 근거는 전용 칸 입력)')
+open('팀1_EXACYCLE_지원서_접수최적.md', 'w', encoding='utf-8').write(opt)
+print('접수최적 md regenerated')
+
 # ---------- 접수용 TXT ----------
-body = '# 1팀' + s.split('# 1팀')[1].split('# 공통 전략 메모')[0]
+body = '# 1팀' + opt.split('# 1팀')[1].split('# 공통 전략 메모')[0]
 lines = body.split('\n'); out = []
 for l in lines:
     if l.startswith('# '):

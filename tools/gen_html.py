@@ -207,5 +207,7 @@ build('팀1_EXACYCLE_지원서.md','EXACYCLE_구조도.svg','팀1_EXACYCLE_지�
       1,'EXACYCLE','EXACYCLE','개발(HW)','가상팀 (Virtual Team)')
 build('팀1_EXACYCLE_지원서_근거포함.md','EXACYCLE_구조도.svg','팀1_EXACYCLE_지원서_근거포함.html',
       1,'EXACYCLE (근거 주석판)','EXACYCLE','개발(HW)','가상팀 (Virtual Team)')
+build('팀1_EXACYCLE_지원서_접수최적.md','EXACYCLE_구조도.svg','팀1_EXACYCLE_지원서_접수최적.html',
+      1,'EXACYCLE (접수 최적판)','EXACYCLE','개발(HW)','가상팀 (Virtual Team)')
 build('팀2_CYCLE-Master_지원서.md','CYCLE-Master_구조도.svg','팀2_CYCLE-Master_지원서.html',
       2,'CYCLE-Master','냉부해(냉동사이클을 부탁해)','개발(HW)','가상직원 (Virtual Employee)')
