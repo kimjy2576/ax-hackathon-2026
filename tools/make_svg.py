@@ -66,22 +66,22 @@ def chip(x,y,text,w=None,fg="#4B5563",bg="#fff",bd=BD,size=10.5):
     return rect(x,y,w,24,bg,bd,rx=12,sw=1)+txt(x+w/2,y+16,text,size,700,fg,anchor="middle"), w
 
 # ================= C1 : EXACYCLE =================
-OY=72; W=860; H1=OY+888+50
+OY=72; W=860; H1=OY+904+50
 c1=[f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H1}" viewBox="0 0 {W} {H1}" font-family="{FONT}">',
     DEFS, rect(0.75,0.75,W-1.5,H1-1.5,"#fff",BD,rx=18),
     header("EXACYCLE 서비스 구조도","순방향(요구사양 → 설계안) · 과제 유형별 분기 → 공통 백본 수렴","EXACYCLE")]
 def Y(y): return y+OY
 
 # 스파인·연결선
-for (y1,y2) in [(68,90),(190,212),(444,464),(556,576),(668,688),(796,816)]:
+for (y1,y2) in [(68,90),(190,212),(444,464),(556,590),(684,702),(812,830)]:
     c1.append(arrow(540,Y(y1),540,Y(y2)))
 c1.append(arrow(206,Y(330),298,Y(330),dash="4 4",sw=1.5))
 c1.append(arrow(206,Y(496),298,Y(496),color=IND,marker="m-ind"))
 c1.append(arrow(300,Y(526),208,Y(526),color=IND,marker="m-ind"))
-c1.append(f'<path d="M 780,{Y(616)} L 806,{Y(616)} Q 814,{Y(616)} 814,{Y(608)} L 814,{Y(522)} Q 814,{Y(514)} 806,{Y(514)} L 786,{Y(514)}" stroke="{RED}" stroke-width="1.8" fill="none" marker-end="url(#m-red)"/>')
+c1.append(f'<path d="M 780,{Y(632)} L 806,{Y(632)} Q 814,{Y(632)} 814,{Y(624)} L 814,{Y(522)} Q 814,{Y(514)} 806,{Y(514)} L 786,{Y(514)}" stroke="{RED}" stroke-width="1.8" fill="none" marker-end="url(#m-red)"/>')
 
 # 게이트 ①/②
-for (gy,no,sm) in [(20,"①","과제 입력 · 설계 브리프 승인"),(818,"②","최종 검토 · 확정")]:
+for (gy,no,sm) in [(20,"①","과제 입력 · 설계 브리프 승인"),(834,"②","최종 검토 · 확정")]:
     c1.append(rect(425,Y(gy),230,46,GR_S,GR_B,rx=23,dash="4 4"))
     c1.append(txt(540,Y(gy)+20,f"사람 게이트 {no}",12.5,800,"#4B5563",anchor="middle"))
     c1.append(txt(540,Y(gy)+36,sm,10.5,600,SUB,anchor="middle"))
@@ -117,13 +117,13 @@ for i,(no,mn,md) in enumerate(minis):
 
 agent_card(466,90,"3","해석 에이전트","(공통 백본으로 수렴)",
   ["유형별 탐색 계획을 받아 케이스 자동 생성 → 1D 엔진 일괄 실행 → 수렴·실패 관리","→ 후처리."],518)
-agent_card(578,90,"4","검증 에이전트",None,
+agent_card(594,90,"4","검증 에이전트",None,
   [[("에너지 밸런스 · 물성 유효범위 · 경향성 검사. 기준 위반 시 ",500,SUB),("반려(재해석 지시),",800,RED)],
-   "통과 결과만 보고로 전달."],630)
-agent_card(690,106,"5","보고 에이전트",None,
+   "통과 결과만 보고로 전달."],646)
+agent_card(706,106,"5","보고 에이전트",None,
   ["파레토 프론트 · 검토 보고서 초안 생성.",
    [("유형별 산출물",800,INK),(" — ① 추천 설계안 · ② 구성 비교표 · ③ 냉매 후보 순위표 · ④ 연구개발",500,SUB)],
-   "보고서"],742)
+   "보고서"],758)
 
 # 좌측 레일
 c1.append(rect(24,Y(262),182,136,GR_S,BD))
@@ -135,15 +135,15 @@ c1.append(rect(160,Y(477),34,15,IND,"none",rx=6,sw=0)); c1.append(txt(177,Y(488)
 c1.append(lines(39,Y(510),["자체 개발 해석 프로그램","해석 호출 ⇄ 결과 반환"],lh=17))
 
 # 라벨
-c1.append(rect(548,Y(552),108,18,"#fff","none",rx=6,sw=0))
-c1.append(txt(552,Y(565),"검증 통과 결과만",10,700,SUB))
-c1.append(rect(786,Y(550),56,36,RED_S,RED_B,rx=8,sw=1))
-c1.append(txt(814,Y(564),"반려",10,700,RED,anchor="middle"))
-c1.append(txt(814,Y(578),"재해석",10,700,RED,anchor="middle"))
+c1.append(rect(548,Y(566),108,18,"#fff","none",rx=6,sw=0))
+c1.append(txt(552,Y(579),"검증 통과 결과만",10,700,SUB))
+c1.append(rect(786,Y(566),56,36,RED_S,RED_B,rx=8,sw=1))
+c1.append(txt(814,Y(580),"반려",10,700,RED,anchor="middle"))
+c1.append(txt(814,Y(594),"재해석",10,700,RED,anchor="middle"))
 
 # 범례
-c1.append(f'<line x1="0" y1="{OY+888}" x2="{W}" y2="{OY+888}" stroke="{BD}" stroke-width="1"/>')
-c1.append(legend([("a","AI 에이전트 (5)"),("h","사람 개입 게이트 (2곳)"),("t","도구 · MCP"),("k","지식 자산"),("loop","검증·반려 루프")],OY+888+31))
+c1.append(f'<line x1="0" y1="{OY+904}" x2="{W}" y2="{OY+904}" stroke="{BD}" stroke-width="1"/>')
+c1.append(legend([("a","AI 에이전트 (5)"),("h","사람 개입 게이트 (2곳)"),("t","도구 · MCP"),("k","지식 자산"),("loop","검증·반려 루프")],OY+904+31))
 c1.append('</svg>')
 open('EXACYCLE_구조도.svg','w',encoding='utf-8').write(''.join(c1))
 
